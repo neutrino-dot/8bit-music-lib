@@ -1,7 +1,6 @@
 import numpy as np
 from scipy import signal
 from abc import ABC, abstractmethod
-from .core import SongConfig
 import numbers
 class WaveGenerator(ABC):
     """
@@ -34,7 +33,9 @@ class SquareWave(WaveGenerator):
         Generate square wave for the given frequencies and time array.
     """
     def __init__(self, duty=0.5):
-        self.duty = SongConfig.checkVT(duty, numbers.Real, 0.0, 1.0, "duty")
+        if not isinstance(duty, numbers.Real) or not (0.0 <= duty <= 1.0):
+            raise ValueError(f"duty must be a real number between 0.0 and 1.0, got {duty}")
+        self.duty = duty
     def generate(self, freqs, t):
         tt = 2 * np.pi * freqs[:, None] * t[None, :]
         return signal.square(tt, duty=self.duty)
