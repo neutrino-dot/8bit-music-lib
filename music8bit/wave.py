@@ -15,7 +15,6 @@ class WaveGenerator(ABC):
     """
     @property
     def allow_unknown_notes(self) -> bool:
-        """未知の音符を許すか"""
         return False
 
     @abstractmethod

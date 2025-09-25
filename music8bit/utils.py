@@ -34,6 +34,7 @@ def play_audio(wave: np.ndarray, sr: int = 22050):
     return None
 
 def check_Val_Typ(value, expected_type, least_range=None, most_range=None, name="value"):
+    """ある変数が期待通りの型でかつそれが範囲内に入っているかを調べる関数"""
     # 型チェック
     if not isinstance(value, expected_type):
         # expected_type がタプルなら型名をまとめる

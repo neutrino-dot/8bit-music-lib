@@ -10,7 +10,11 @@ setup(
     install_requires=[
         "numpy",
         "scipy",
-        
     ],
-    python_requires=">=3.7",
+    extras_require={
+        "sounddevice": ["sounddevice"],
+        "simpleaudio": ["simpleaudio"],
+        "jupyter": ["ipython"],
+    },
+    python_requires=">=3.8",
 )
