@@ -2,6 +2,7 @@ import warnings
 import numpy as np
 from dataclasses import dataclass
 import numbers
+from .utils import check_Val_Typ, play_audio
 
 
 # -------------------------
@@ -44,25 +45,6 @@ class SongConfig:
         wave_buffer_8bit = np.round(wave_buffer * 127).astype(np.int8)
         return (wave_buffer_8bit.astype(np.float32) / 127 * 32767).astype(np.int16)
 
-    @staticmethod
-    def checkVT(value, expected_type, least_range=None, most_range=None, name="value"):
-        # 型チェック
-        if not isinstance(value, expected_type):
-            # expected_type がタプルなら型名をまとめる
-            if isinstance(expected_type, tuple):
-                type_names = ", ".join(t.__name__ for t in expected_type)
-            else:
-                type_names = expected_type.__name__
-            raise TypeError(f"{name} must be {type_names}, got {type(value).__name__}")
-
-        # 数値型なら範囲チェック（int, float など）
-        if isinstance(value, numbers.Real):
-            if least_range is not None and value < least_range:
-                raise ValueError(f"{name} must be >= {least_range}, got {value}")
-            if most_range is not None and value > most_range:
-                raise ValueError(f"{name} must be <= {most_range}, got {value}")
-
-        return value
 
 
 
@@ -157,9 +139,9 @@ class Part:
               if len(item) != 2:
                   raise TypeError(f"melody[{i}] must have length 2, got {len(item)}")
 
-        self.bpm = SongConfig.checkVT(first_bpm,numbers.Real,least_range=0.01,name="first_bpm")
-        self.volume = SongConfig.checkVT(volume,numbers.Real,least_range=0.0,name="volume")
-        self.wave_generator = SongConfig.checkVT(generator, WaveGenerator, name="generator")
+        self.bpm = check_Val_Typ(first_bpm,numbers.Real,least_range=0.01,name="first_bpm")
+        self.volume = check_Val_Typ(volume,numbers.Real,least_range=0.0,name="volume")
+        self.wave_generator = check_Val_Typ(generator, WaveGenerator, name="generator")
         self.events = self.schedule(melody)
         self.total_beat = self.get_total_beat(melody)
 
@@ -169,7 +151,7 @@ class Part:
         current_bpm = self.bpm
         for notes, beat in melody:
             if notes == "BPM":
-                current_bpm = SongConfig.checkVT(float(beat), numbers.Real, least_range=1, name="BPM")
+                current_bpm = check_Val_Typ(float(beat), numbers.Real, least_range=1, name="BPM")
                 continue
             duration = beat * (60 / current_bpm)
             events.append(NoteEvent(current_time, duration, notes))
@@ -195,7 +177,7 @@ class Part:
             if "=" in token:
                 key, value = token.split("=")
                 if key == "BPM":
-                    results.append(("BPM", SongConfig.checkVT(float(value), numbers.Real, least_range=1, name="BPM")))
+                    results.append(("BPM", check_Val_Typ(float(value), numbers.Real, least_range=1, name="BPM")))
                 continue
             if ":" in token:
                 note_str, beat = token.split(":")
@@ -269,7 +251,7 @@ class SongMixer:
         elif not all(isinstance(part, Part) for part in parts):
             raise TypeError("all elements of parts must be Part")
         self.parts = parts
-        self.sampling_rate = SongConfig.checkVT(sampling_rate,int,least_range=0,name="sampling_rate")
+        self.sampling_rate = check_Val_Typ(sampling_rate,int,least_range=0,name="sampling_rate")
         self._wave = None
         self.total_duration = self.get_total_duration()
 
@@ -323,3 +305,7 @@ class SongMixer:
 
         self._wave = SongConfig.quantize_8bit(wave_buffer)
         return self._wave
+    def play(self):
+        if self._wave is None:
+            self.synthesize()
+        return play_audio(self._wave, sr=self.sampling_rate)
