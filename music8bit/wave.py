@@ -14,8 +14,13 @@ class WaveGenerator(ABC):
     generate(freqs, t)
         Generate waveform data for the given frequencies and time array.
     """
+    @property
+    def allow_unknown_notes(self) -> bool:
+        """未知の音符を許すか"""
+        return False
+
     @abstractmethod
-    def generate(self, freqs, t):
+    def generate(self, freq, duration, volume):
         pass
 
 class SquareWave(WaveGenerator):
@@ -80,6 +85,10 @@ class NoiseWave(WaveGenerator):
     generate(freqs, t)
         Generate noise waveform. `freqs` is ignored; `t` is used to shape the envelope.
     """
+    @property
+    def allow_unknown_notes(self) -> bool:
+        return True  # 未知の音符もOK
+    
     def generate(self, freqs, t):
         num_samples = len(t)
         waves = np.random.uniform(-1, 1, (len(freqs), num_samples))

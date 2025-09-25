@@ -306,7 +306,7 @@ class SongMixer:
                 num_samples = end_sample - start_sample
                 t = np.linspace(0, event.duration, num_samples, endpoint=False)
 
-                if isinstance(part.wave_generator, NoiseWave):
+                if part.wave_generator.allow_unknown_notes:
                     # NoiseWave ignores freqs, only the length matters
                     freqs = np.ones(len(event.notes))
                 else:
