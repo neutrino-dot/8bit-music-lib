@@ -37,7 +37,7 @@ class SquareWave(WaveGenerator):
         Generate square wave for the given frequencies and time array.
     """
     def __init__(self, duty=0.5):
-        if not isinstance(duty, [int,float]) or not (0.0 <= duty <= 1.0):
+        if not isinstance(duty, (int,float)) or not (0.0 <= duty <= 1.0):
             raise ValueError(f"duty must be a real number between 0.0 and 1.0, got {duty}")
         self.duty = duty
     def generate(self, freqs, t):
