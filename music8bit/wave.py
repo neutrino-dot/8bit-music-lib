@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import signal
+from abc import ABC, abstractmethod
 
 class WaveGenerator(ABC):
     """
