@@ -89,7 +89,7 @@ class NoiseWave(WaveGenerator):
     
     def generate(self, freqs, t):
         num_samples = len(t)
-        waves = np.random.uniform(-1, 1, (len(freqs), num_samples))
+        waves = np.random.uniform(-0.2, 0.2, (len(freqs), num_samples))
         envelope = np.exp(-5 * t)
         waves *= envelope
         return waves
