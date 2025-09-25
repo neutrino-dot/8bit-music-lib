@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import signal
 from abc import ABC, abstractmethod
-from SongConfig import checkVT
+from .SongConfig import checkVT
 class WaveGenerator(ABC):
     """
     Abstract base class for waveform generators.
