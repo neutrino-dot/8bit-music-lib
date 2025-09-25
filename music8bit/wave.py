@@ -95,3 +95,11 @@ class NoiseWave(WaveGenerator):
         envelope = np.exp(-5 * t)
         waves *= envelope
         return waves
+
+__all__ = [
+    "SquareWave",
+    "TriangleWave",
+    "SineWave",
+    "NoiseWave",
+    "WaveGenerator"
+]

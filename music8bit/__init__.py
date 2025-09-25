@@ -8,6 +8,6 @@ __all__ = [
     "play_audio",
     "SquareWave",
     "TriangleWave",
-    "NoiseWave",
-    "WaveGenerator"
+    "SineWave",
+    "NoiseWave"
 ]
