@@ -1,7 +1,7 @@
 import numpy as np
 import warnings
 
-def play_audio(wave: np.ndarray, sr: int = 44100):
+def play_audio(wave: np.ndarray, sr: int = 22050):
     """
     環境に応じて自動で再生方式を切り替える
     """
