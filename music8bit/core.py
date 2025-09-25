@@ -1,8 +1,6 @@
-# ここにあなたの400行コードを貼り付け
 import warnings
 import numpy as np
 from scipy import signal
-from IPython.display import Audio
 import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
@@ -422,31 +420,3 @@ class SongMixer:
 
         self._wave = SongConfig.quantize_8bit(wave_buffer)
         return self._wave
-
-    def play(self, autoplay=True):
-        """
-        Play the generated song waveform in a Jupyter/Colab notebook.
-
-        If the waveform has not been synthesized yet, this method will first
-        call `synthesize()` to generate the waveform for all parts.
-
-        Parameters
-        ----------
-        autoplay : bool, optional
-            If True, playback starts automatically when the Audio object is displayed.
-            Default is True.
-
-        Returns
-        -------
-        IPython.display.Audio
-            An Audio object that can be used to play the sound in a notebook.
-
-        Examples
-        --------
-        mixer = SongMixer([part1, part2])
-        mixer.synthesize()
-        mixer.play()
-        """
-        if self._wave is None:
-            self.synthesize()
-        return Audio(self._wave, rate=self.sampling_rate, autoplay=SongConfig.checkVT(autoplay,bool,name="autoplay"))
