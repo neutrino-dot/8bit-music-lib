@@ -18,7 +18,7 @@ class WaveGenerator(ABC):
         return False
 
     @abstractmethod
-    def generate(self, freq, duration, volume):
+    def generate(self, freq, t):
         pass
 
 class SquareWave(WaveGenerator):
