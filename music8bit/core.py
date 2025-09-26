@@ -114,7 +114,7 @@ class Part:
     """
     def __init__(self, melody, volume, generator: "WaveGenerator", first_bpm=120):
         # 自動判定
-        if isinstance(melody, list):
+        if not isinstance(melody, list):
             raise TypeError("melody must be a list")
         elif not all(isinstance(item, tuple) and len(item) == 2 for item in melody):
             for i, item in enumerate(melody):
