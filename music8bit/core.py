@@ -76,11 +76,8 @@ class Part:
     Parameters
     ----------
     melody : list of tuples or str
-        Melody sequence. You can provide either:
-        (1) a list of (notes, beat) tuples, e.g.:
-            [(['C4'], 1), (['E4','E5'], 1), (['G4'], 2), (['R'], 1), (['BPM'], 90)]
-        (2) an MML-like string, e.g.:
-            "C4 E4+E5 G4:2 R BPM=90"
+        Melody sequence. You can provide a list of (notes, beat) tuples, e.g.:
+        [(['C4'], 1), (['E4','E5'], 1), (['G4'], 2), (['R'], 1), (['BPM'], 90)]
     volume : float
         Volume of the part (0.0 to 1.0).
     generator : WaveGenerator
@@ -104,25 +101,20 @@ class Part:
     Notes
     -----
     - Rest notes ("R") are treated as silence.
-    - BPM change events ("BPM=value") affect subsequent durations.
+    - BPM change events ("BPM",value) affect subsequent durations.
 
     Examples
     --------
     from your_library import Part, SquareWave
 
-    # IF list
-    melody = [(['C4'], 1), (['E4','E5'], 1), (['G4'], 2), (['R'], 1), (['BPM'], 90)]
 
-    # IF str
-    melody = "C4 E4+E5 G4:2 R BPM=90"
+    melody = [(['C4'], 1), (['E4','E5'], 1), (['G4'], 2), (['R'], 1), (['BPM'], 90)]
 
     part = Part(melody, volume=0.5, generator=SquareWave(), first_bpm=120)
     """
     def __init__(self, melody, volume, generator: "WaveGenerator", first_bpm=120):
         # 自動判定
-        if isinstance(melody, str):
-            melody = self.parse_melody(melody)
-        elif not isinstance(melody, list):
+        if isinstance(melody, list):
             raise TypeError("melody must be a list")
         elif not all(isinstance(item, tuple) and len(item) == 2 for item in melody):
             for i, item in enumerate(melody):
@@ -153,35 +145,6 @@ class Part:
     def get_total_beat(self, melody):
         return sum(beat for notes,beat in melody if notes != "BPM")
 
-    def parse_melody(self, melody_str, default_beat=1.0):
-        """
-        Internal method: convert melody_str into structured list.
-
-        Returns
-        -------
-        list of tuples
-            Each tuple is ([notes...], beat) or ("BPM", int_value).
-        """
-        tokens = melody_str.split()
-        results = []
-        current_beat = default_beat
-        for token in tokens:
-            if "=" in token:
-                key, value = token.split("=")
-                if key == "BPM":
-                    results.append(("BPM", check_Val_Typ(float(value), numbers.Real, least_range=1, name="BPM")))
-                continue
-            if ":" in token:
-                note_str, beat = token.split(":")
-                note = note_str.split("+")
-                results.append((note, float(beat)))
-            else:
-                try:
-                    current_beat = float(token)
-                except ValueError:
-                    note = token.split("+")
-                    results.append((note, current_beat))
-        return results
 
 
 # -------------------------
@@ -215,8 +178,8 @@ class SongMixer:
         Returns the total duration of the song in seconds.
     synthesize()
         Generates the waveform for all parts and combines them.
-    play(autoplay=True)
-        Returns an Audio object for playback in Jupyter/Colab notebooks.
+    play()
+
 
     Notes
     -----
@@ -260,13 +223,13 @@ class SongMixer:
         return max(durations, default=0.0)  # durations が空でも 0.0
 
 
-    def _validate_note(self, note):
+    def _validate_note(self, note) -> bool:
         if note.upper() not in SongConfig.NOTE_FREQUENCIES:
             warnings.warn(f"Unknown note: {note}")
             return False
         return True
 
-    def synthesize(self):
+    def synthesize(self) -> np.ndarray:
         total_duration = self.total_duration
         total_samples = int(self.sampling_rate * total_duration)
         wave_buffer = np.zeros(total_samples)
