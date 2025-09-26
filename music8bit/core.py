@@ -57,15 +57,6 @@ class SongConfig:
 class NoteEvent:
     """
     Represents a single note event with start time, duration, and notes.
-
-    Attributes
-    ----------
-    start_time : float
-        The start time of the note in seconds.
-    duration : float
-        Duration of the note in seconds.
-    notes : list[str]
-        List of note names, e.g., ['C4', 'E4'].
     """
     start_time: float
     duration: float
@@ -127,7 +118,7 @@ class Part:
 
     part = Part(melody, volume=0.5, generator=SquareWave(), first_bpm=120)
     """
-    def __init__(self, melody, volume, generator: "WaveGenerator", first_bpm):
+    def __init__(self, melody, volume, generator: "WaveGenerator", first_bpm=120):
         # 自動判定
         if isinstance(melody, str):
             melody = self.parse_melody(melody)
