@@ -175,10 +175,12 @@ class SongMixer:
     Methods
     -------
     get_total_duration()
-        Returns the total duration of the song in seconds.
+        Compute the total duration of the song in seconds.
     synthesize()
-        Generates the waveform for all parts and combines them.
+        Generate and mix the waveform from all parts into a single track.
     play()
+        Play the mixed waveform using the best available audio backend.
+
 
 
     Notes
@@ -230,6 +232,24 @@ class SongMixer:
         return True
 
     def synthesize(self) -> np.ndarray:
+        """
+        Generate and mix the waveform of all parts.
+
+        This method synthesizes each Part's events using its assigned
+        WaveGenerator, aligns them in time, applies volume scaling,
+        and sums them into a single waveform.
+
+        Returns
+        -------
+        np.ndarray
+            The mixed waveform as an 8-bit quantized NumPy array.
+
+        Notes
+        -----
+        - Unknown notes are ignored with a warning.
+        - Parts with no events are skipped.
+        - The generated waveform is cached in `_wave` for reuse.
+        """
         total_duration = self.total_duration
         total_samples = int(self.sampling_rate * total_duration)
         wave_buffer = np.zeros(total_samples)
@@ -261,6 +281,27 @@ class SongMixer:
         self._wave = SongConfig.quantize_8bit(wave_buffer)
         return self._wave
     def play(self):
+        """
+        Play the mixed song waveform.
+
+        If the waveform has not been synthesized yet, this method calls
+        `synthesize()` automatically before playback.
+
+        Returns
+        -------
+        IPython.display.Audio or None
+            - In Jupyter/Colab environments, returns an Audio widget
+            for inline playback.
+            - In other environments, plays audio using `sounddevice` or
+            `simpleaudio` if available, and returns None.
+
+        Notes
+        -----
+        - If no playback backend is available, a warning is issued.
+        - For inline playback in notebooks, install `IPython`.
+        - For local playback outside notebooks, install `sounddevice`
+        or `simpleaudio`.
+        """
         if self._wave is None:
             self.synthesize()
         return play_audio(self._wave, sr=self.sampling_rate)
