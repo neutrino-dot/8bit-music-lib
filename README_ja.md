@@ -24,6 +24,7 @@ Pythonで8bit風のチップチューン音楽を再生するためのライブ�
 ├── .gitignore
 ├── LICENSE
 ├── README.md
+├── README_ja.md
 └── setup.py
 ```
 
