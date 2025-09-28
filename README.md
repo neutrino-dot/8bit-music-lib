@@ -25,6 +25,7 @@ This is a Python library for playing 8-bit style chiptune music.
 ├── .gitignore
 ├── LICENSE
 ├── README.md
+├── README_ja.md
 └── setup.py
 ```
 
@@ -34,16 +35,15 @@ This is a Python library for playing 8-bit style chiptune music.
 
 It is recommended to install with a playback library.
 
-### Recommended: via simpleaudio (Windows/macOS/Linux)
-```bash
-pip install 8bit-music-lib[simpleaudio]
-```
-
-### Using PortAudio (via sounddevice)
+### Recommended: via sounddevice (Windows/macOS/Linux)
 ```bash
 pip install 8bit-music-lib[sounddevice]
 ```
+### Alternative: via simpleaudio (requires C++ build tools on Windows)
+```bash
+pip install 8bit-music-lib[simpleaudio]
 
+```
 ### Jupyter Notebook / Google Colaboratory
 Useful for playing audio and displaying waveforms directly in the notebook.  
 On Colab, add `!` at the beginning of the command:
