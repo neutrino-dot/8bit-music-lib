@@ -33,14 +33,14 @@ Pythonで8bit風のチップチューン音楽を再生するためのライブ�
 
 基本的には、再生ライブラリ付きでのインストールを推奨します。
 
-### 推奨：simpleaudio 経由（Windows/macOS/Linux）
-```bash
-pip install 8bit-music-lib[simpleaudio]
-```
-
-### PortAudio を利用する場合（sounddevice 経由）
+### 推奨: sounddevice 経由（Windows/macOS/Linux）
 ```bash
 pip install 8bit-music-lib[sounddevice]
+```
+
+### 代替: simpleaudio 経由（要C++ビルド環境、Windowsで注意）
+```bash
+pip install 8bit-music-lib[simpleaudio]
 ```
 
 ### Jupyter Notebook / Google Colaboratory
@@ -177,7 +177,9 @@ class MyWave(WaveGenerator):
         return np.sin(2*np.pi*freqs[:, None]*t[None, :])**3
 ```
 - freqs は音階ごとの周波数（1D配列）
-- t は時間軸（1D配列）
+- t は時間軸（1D配列）  
+
+returnの部分にお好きな処理をお書きください
 
 ---
 ## あとがき
