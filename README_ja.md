@@ -27,8 +27,34 @@ Pythonで8bit風のチップチューン音楽を再生するためのライブ�
 ```
 
 ## インストール方法
-コンピュータにPythonがインストールされていることを確認してください。最適なバージョンは3.7以上です。コンピュータのコマンドプロンプトを開き、
+基本的には、再生ライブラリ付きでインストールするのを推奨します。
+
+
+### simpleaudio を使う場合（おすすめ）
+依存関係が少なく、Windows / macOS / Linux で安定して動作します。
+```bash
+pip install 8bit-music-lib[simpleaudio]
+```  
+
+
+### sounddevice を使う場合
+PortAudio を利用した再生が可能です。
+一部の環境では追加ライブラリの導入が必要になる場合があります。
+```bash
+pip install 8bit-music-lib[sounddevice]
+```
+
+
+###  を使う場合
+Notebook での実験や Google Colaboratory での利用に便利です。
+Colab の場合は先頭に `!` を付けて実行してください。
+```bash
+pip install 8bit-music-lib[jupyter]
+```  
+
+※最低限の機能だけ使いたい場合は
 ```
 pip install 8bit-music-lib
 ```
-また、PythonがなくてもGoogle Colaboratoryがあればそちらでも動かせます。
+
+でもOKですが、この場合波形データ生成のみ行うことができ、音声再生はできません。
