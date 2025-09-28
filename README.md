@@ -1,7 +1,7 @@
 # 8bit-music-lib (English)
 This is a Python library for playing 8-bit style chiptune music.
 
-[日本語READMEはこちら](README_ja.md)
+[日本語READMEはこちら](https://github.com/neutrino-dot/8bit-music-lib/blob/main/README_ja.md)
 
 - Compatible with Jupyter Notebook, so it can also run on Google Colaboratory.
 - Recommended for those who want to quickly try playing 8-bit music.
