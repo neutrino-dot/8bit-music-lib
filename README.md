@@ -1,6 +1,6 @@
 # 8bit-music-lib(English Introduction ver)
 8-bit style music synthesis library in Python
-
+[日本語READMEはこちら](README_ja.md)
 
 ## Custom Waveform
 
