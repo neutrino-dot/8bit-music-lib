@@ -163,6 +163,20 @@ song = m8.SongMixer([part1, part2, part3])
 
 ---
 
+### 独自波形関数を使用する場合
+ほぼおまけみたいなものです。
+
+独自の波形を追加するには、`WaveGenerator` をサブクラス化し、`generate(freqs, t)` を実装します。
+使用例:
+```python
+from musiclib.waves import WaveGenerator
+import numpy as np
+
+class MyWave(WaveGenerator):
+    def generate(self, freqs, t):
+        return np.sin(2*np.pi*freqs[:, None]*t[None, :])**3
+```
+
 ## あとがき
 
 このライブラリは、制作者が Google Colab で音楽を流したいという身勝手な欲求のために、  
