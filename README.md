@@ -147,8 +147,7 @@ part = m8.Part(
 - `melody`: list of notes
 - `volume`: 0.0 = silent, 1.0 = max (too high may cause clipping)
 - `generator`: waveform
-- `first_bpm`: initial tempo
-
+- `first_bpm`: starting tempo; can be changed mid-song with ('BPM', new_value)
 ---
 
 ## Playback
@@ -156,7 +155,14 @@ part = m8.Part(
 Pass a list of `Part` instances to the `SongMixer` class to combine them into a full song waveform.
 
 ```python
+# Combine multiple Part instances into a full song
 song = m8.SongMixer([part1, part2, part3])
+
+# Get waveform data
+waveform = song.synthesize()
+
+# Play audio
+song.play()
 ```
 
 - `synthesize()`: returns waveform data  
