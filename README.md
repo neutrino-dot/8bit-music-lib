@@ -175,7 +175,7 @@ song.play()
 To add your own waveform, subclass `WaveGenerator` and implement `generate(freqs, t)`.  
 Example:
 ```python
-from musiclib.waves import WaveGenerator
+from music8bit.wave import WaveGenerator
 import numpy as np
 
 class MyWave(WaveGenerator):
