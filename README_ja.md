@@ -156,7 +156,14 @@ part = m8.Part(
 `SongMixer` クラスに `Part` インスタンスをリストで渡すと、曲全体を波形データに変換できます。
 
 ```python
+# Combine multiple Part instances into a full song
 song = m8.SongMixer([part1, part2, part3])
+
+# Get waveform data
+waveform = song.synthesize()
+
+# Play audio
+song.play()
 ```
 
 - `synthesize()` : 波形データを返す  
