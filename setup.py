@@ -6,7 +6,7 @@ long_description = (this_dir / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="8bit-music-lib",   # pip install 時に使う名前
-    version="0.1.0",
+    version="0.1.1",
     description="A simple 8bit-style music library",
     long_description=long_description,
     long_description_content_type="text/markdown",  # PyPIでREADMEをMarkdown表示
