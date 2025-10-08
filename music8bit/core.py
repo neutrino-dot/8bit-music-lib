@@ -2,7 +2,7 @@ import warnings
 import numbers
 import numpy as np
 from dataclasses import dataclass
-from .utils import check_Val_Typ, play_audio
+from .utils import _playAudio,_validate
 from .wave import WaveGenerator
 
 
@@ -123,9 +123,9 @@ class Part:
               if len(item) != 2:
                   raise TypeError(f"melody[{i}] must have length 2, got {len(item)}")
 
-        self.bpm = check_Val_Typ(first_bpm,numbers.Real,least_range=0.01,name="first_bpm")
-        self.volume = check_Val_Typ(volume,numbers.Real,least_range=0.0,name="volume")
-        self.wave_generator = check_Val_Typ(generator, WaveGenerator, name="generator")
+        self.bpm = _validate(first_bpm,numbers.Real,least_range=0.01,name="first_bpm")
+        self.volume = _validate(volume,numbers.Real,least_range=0.0,name="volume")
+        self.wave_generator = _validate(generator, WaveGenerator, name="generator")
         self.events = self.schedule(melody)
         self.total_beat = self.get_total_beat(melody)
 
@@ -135,7 +135,7 @@ class Part:
         current_bpm = self.bpm
         for notes, beat in melody:
             if notes == "BPM":
-                current_bpm = check_Val_Typ(float(beat), numbers.Real, least_range=1, name="BPM")
+                current_bpm = _validate(float(beat), numbers.Real, least_range=1, name="BPM")
                 continue
             duration = beat * (60 / current_bpm)
             events.append(NoteEvent(current_time, duration, notes))
@@ -208,7 +208,7 @@ class SongMixer:
         elif not all(isinstance(part, Part) for part in parts):
             raise TypeError("all elements of parts must be Part")
         self.parts = parts
-        self.sampling_rate = check_Val_Typ(sampling_rate,int,least_range=0,name="sampling_rate")
+        self.sampling_rate = _validate(sampling_rate,int,least_range=0,name="sampling_rate")
         self._wave = None
         self.total_duration = self.get_total_duration()
 
@@ -304,4 +304,4 @@ class SongMixer:
         """
         if self._wave is None:
             self.synthesize()
-        return play_audio(self._wave, sr=self.sampling_rate)
+        return _playAudio(self._wave, sr=self.sampling_rate)
