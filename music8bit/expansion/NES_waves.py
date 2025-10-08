@@ -56,3 +56,7 @@ class SquareWave2(WaveGenerator):
         wave = nes_lowpass(wave, fs=sample_rate)
 
         return wave
+        
+__all__ = [
+    "SquareWave2"
+]
