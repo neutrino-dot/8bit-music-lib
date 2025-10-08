@@ -4,15 +4,16 @@ from music8bit.wave import WaveGenerator
 
 def polyblep_vec_2d(phase, dt):
     out = np.zeros_like(phase)
+    
+    # mask_start
     mask_start = phase < dt
+    x_start = phase / dt
+    out = np.where(mask_start, x_start + x_start - x_start**2 - 1.0, out)
+
+    # mask_end
     mask_end = phase > 1.0 - dt
-
-    x = np.zeros_like(phase)
-    x[mask_start] = phase[mask_start] / dt
-    out[mask_start] = x[mask_start] + x[mask_start] - x[mask_start]**2 - 1.0
-
-    x[mask_end] = (phase[mask_end] - 1.0) / dt
-    out[mask_end] = x[mask_end]**2 + 3 * x[mask_end] + 1.0
+    x_end = (phase - 1.0) / dt
+    out = np.where(mask_end, x_end**2 + 3*x_end + 1.0, out)
 
     return out
 
