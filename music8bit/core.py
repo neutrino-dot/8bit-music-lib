@@ -2,7 +2,7 @@ import warnings
 import numbers
 import numpy as np
 from dataclasses import dataclass
-from .utils import _playAudio,_validate
+from .utils import _play_audio,_validate
 from .wave import WaveGenerator
 
 
@@ -304,4 +304,4 @@ class SongMixer:
         """
         if self._wave is None:
             self.synthesize()
-        return _playAudio(self._wave, sr=self.sampling_rate)
+        return _play_audio(self._wave, sr=self.sampling_rate)
