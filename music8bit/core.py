@@ -112,7 +112,7 @@ class Part:
 
     part = Part(melody, volume=0.5, generator=SquareWave(), first_bpm=120)
     """
-    def __init__(self, *, melody, volume=0.5, generator = SquareWave(), first_bpm=120):
+    def __init__(self, *, melody, volume=0.5, generator:WaveGenerator, first_bpm=120):
         # 自動判定
         if not isinstance(melody, list):
             raise TypeError("melody must be a list")
