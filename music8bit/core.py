@@ -262,8 +262,8 @@ class SongMixer:
                 t = np.linspace(0, event.duration, num_samples, endpoint=False)
 
                 if part.wave_generator.allow_unknown_notes:
-                    # NoiseWave ignores freqs, only the length matters
-                    freqs = np.ones(len(event.notes))
+                    # freqの代わりにnotesをそのまま渡す
+                    freqs = np.array(event.notes)
                 else:
                     freqs = np.array([
                         SongConfig.NOTE_FREQUENCIES[note.upper()]
@@ -271,6 +271,7 @@ class SongMixer:
                         if self._validate_note(note)
                         and SongConfig.NOTE_FREQUENCIES[note.upper()] > 0
                     ])
+
                 if len(freqs) == 0:
                     continue
 
