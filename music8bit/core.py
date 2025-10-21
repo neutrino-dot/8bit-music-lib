@@ -263,7 +263,7 @@ class SongMixer:
 
                 if part.wave_generator.allow_unknown_notes:
                     # freqの代わりにnotesをそのまま渡す
-                    freqs = np.array(event.notes)
+                    freqs = event.notes
                 else:
                     freqs = np.array([
                         SongConfig.NOTE_FREQUENCIES[note.upper()]
