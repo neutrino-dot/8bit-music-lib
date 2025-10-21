@@ -94,6 +94,25 @@ class NoiseWave(WaveGenerator):
         waves *= envelope
         return waves
 
+class DrumWave(WaveGenerator):
+    @property
+    def allow_unknown_notes(self) -> bool:
+        return True  # 未知の音符もOK
+    
+    def generate(self, freqs, t):
+        waves = []
+        n = str(freqs).lower()
+        if n == "kick":
+            wave = np.sin(2*np.pi*50*t) * np.exp(-20*t)
+        elif n == "snare":
+            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-30*t)
+        elif n == "hihat":
+            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80*t)
+        else:
+            wave = np.zeros(len(t))
+        waves.append(wave)
+
+        return np.array(waves)
 __all__ = [
     "SquareWave",
     "TriangleWave",
