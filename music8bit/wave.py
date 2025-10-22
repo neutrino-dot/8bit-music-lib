@@ -14,7 +14,7 @@ class WaveGenerator(ABC):
         Generate waveform data for the given frequencies and time array.
     """
     @property
-    def allow_unknown_notes(self) -> bool:
+    def using_unique_notes(self) -> bool:
         return False
 
     @abstractmethod
@@ -84,7 +84,7 @@ class NoiseWave(WaveGenerator):
         Generate noise waveform. `freqs` is ignored; `t` is used to shape the envelope.
     """
     @property
-    def allow_unknown_notes(self) -> bool:
+    def using_unique_notes(self) -> bool:
         return True  # 未知の音符もOK
     
     def generate(self, freqs, t):
@@ -96,23 +96,24 @@ class NoiseWave(WaveGenerator):
 
 class DrumWave(WaveGenerator):
     @property
-    def allow_unknown_notes(self) -> bool:
+    def using_unique_notes(self) -> bool:
         return True  # 未知の音符もOK
-    
+
     def generate(self, freqs, t):
-        waves = []
         n = str(freqs).lower()
         if n == "kick":
-            wave = np.sin(2*np.pi*50*t) * np.exp(-20*t)
+            f = 150 - 100 * t / t[-1]
+            wave = (2/np.pi)*np.arcsin(np.sin(2*np.pi*f*t)) * np.exp(-8*t)
+            wave += 0.05*np.random.uniform(-1,1,len(t))*np.exp(-20*t)
         elif n == "snare":
-            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-30*t)
+            wave = np.random.uniform(-1,1,len(t))*np.exp(-30*t)
         elif n == "hihat":
-            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80*t)
+            wave = np.random.uniform(-1,1,len(t))*np.exp(-80*t)
         else:
             wave = np.zeros(len(t))
-        waves.append(wave)
+        return wave
 
-        return np.array(waves)
+
 __all__ = [
     "SquareWave",
     "TriangleWave",
