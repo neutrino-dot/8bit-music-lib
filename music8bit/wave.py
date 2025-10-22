@@ -95,11 +95,13 @@ class NoiseWave(WaveGenerator):
         if not isinstance(decay_rate, (int, float)) or decay_rate <= 0:
             raise ValueError(f"decay_rate must be positive, got {decay_rate}")
         self.decay_rate = decay_rate
-    
-    def generate(self, freqs, t):
+        
+    def generate(self, freqs, t, decay_rate=None):
+        if decay_rate is None:
+            decay_rate = self.decay_rate
         num_samples = len(t)
         waves = np.random.uniform(-1, 1, (len(freqs), num_samples))
-        envelope = np.exp(-self.decay_rate * t)
+        envelope = np.exp(-decay_rate * t)
         waves *= envelope
         return waves
 
@@ -108,8 +110,10 @@ class DrumWave(WaveGenerator):
     def using_unique_notes(self) -> bool:
         return True  # 未知の音符もOK
 
+    def __init__(self):
+        self.noise = NoiseWave()
+
     def generate(self, freqs, t):
-        waves = []
         n = str(freqs).lower()
         if n == "kick":
             # 初期ピッチ高めから最終ピッチへスライド
@@ -125,18 +129,17 @@ class DrumWave(WaveGenerator):
             wave *= np.exp(-8 * t)
 
             # 短いアタックノイズ
-            wave += 0.05 * np.random.uniform(-1, 1, len(t)) * np.exp(-20 * t)
+            wave += 0.05 * self.noise.generate([1], t, decay_rate=20.0)[0]
 
         elif n == "snare":
-            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-30*t)
+            wave = self.noise.generate([1], t, decay_rate=30.0)[0]
         elif n == "hihat":
-            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80*t)
+            wave = self.noise.generate([1], t, decay_rate=80.0)[0]
         else:
             warnings.warn(f"Unknown note: {n}")
             wave = np.zeros(len(t))
-        waves.append(wave)
 
-        return np.array(waves)
+        return np.array([wave])
 
 __all__ = [
     "SquareWave",
