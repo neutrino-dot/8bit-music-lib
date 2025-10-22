@@ -75,22 +75,30 @@ class NoiseWave(WaveGenerator):
 
     This class mimics the noise channel found in retro game consoles.
     The noise itself has no inherent meaning—it's just randomness.
-    So if you want to label it with your favorite symbol (★, ♪, ☂, etc.),
-    go ahead! It’s purely up to your imagination.
+    
+    Parameters
+    ----------
+    decay_rate : float, optional
+        Duty cycle of the square wave (0.0-1.0), default is 0.5.
 
     Methods
     -------
     generate(freqs, t)
-        Generate noise waveform. `freqs` is ignored; `t` is used to shape the envelope.
+        Exponential decay coefficient. Larger = faster decay. Default is 5.0.
     """
     @property
     def using_unique_notes(self) -> bool:
         return True  # 未知の音符もOK
+
+    def __init__(self, decay_rate=5.0):
+        if not isinstance(decay_rate, (int, float)) or decay_rate <= 0:
+            raise ValueError(f"decay_rate must be positive, got {decay_rate}")
+        self.decay_rate = decay_rate
     
     def generate(self, freqs, t):
         num_samples = len(t)
         waves = np.random.uniform(-1, 1, (len(freqs), num_samples))
-        envelope = np.exp(-5 * t)
+        envelope = np.exp(-self.decay_rate * t)
         waves *= envelope
         return waves
 
