@@ -122,8 +122,8 @@ class DrumWave(WaveGenerator):
 
         else:
             wave = np.zeros(len(t))
-
-        return wave
+        waves.append(wave)
+        return np.array(waves)
 
 
 
