@@ -95,23 +95,36 @@ class NoiseWave(WaveGenerator):
         return waves
 
 class DrumWave(WaveGenerator):
+    """Generate simple percussive sounds (kick, snare, hihat)."""
+
     @property
     def using_unique_notes(self) -> bool:
-        return True  # 未知の音符もOK
+        return True
+
+    def __init__(self):
+        self.tri = TriangleWave()  # kickで再利用するための三角波生成器
 
     def generate(self, freqs, t):
         n = str(freqs).lower()
+
         if n == "kick":
             f = 150 - 100 * t / t[-1]
-            wave = (2/np.pi)*np.arcsin(np.sin(2*np.pi*f*t)) * np.exp(-8*t)
-            wave += 0.05*np.random.uniform(-1,1,len(t))*np.exp(-20*t)
+            # 既存の TriangleWave を使用
+            wave = self.tri.generate(f[None, :], t)[0]
+            wave *= np.exp(-8 * t)
+            wave += 0.05 * np.random.uniform(-1, 1, len(t)) * np.exp(-20 * t)
+
         elif n == "snare":
-            wave = np.random.uniform(-1,1,len(t))*np.exp(-30*t)
+            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-30 * t)
+
         elif n == "hihat":
-            wave = np.random.uniform(-1,1,len(t))*np.exp(-80*t)
+            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80 * t)
+
         else:
             wave = np.zeros(len(t))
+
         return wave
+
 
 
 __all__ = [
@@ -119,5 +132,6 @@ __all__ = [
     "TriangleWave",
     "SineWave",
     "NoiseWave",
+    "DrumWave",
     "WaveGenerator"
 ]
