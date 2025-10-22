@@ -7,5 +7,6 @@ __all__ = [
     "SquareWave",
     "TriangleWave",
     "SineWave",
-    "NoiseWave"
+    "NoiseWave",
+    "DrumWave"
 ]
