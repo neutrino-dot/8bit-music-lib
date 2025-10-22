@@ -95,34 +95,42 @@ class NoiseWave(WaveGenerator):
         return waves
 
 class DrumWave(WaveGenerator):
-    """Generate simple percussive sounds (kick, snare, hihat)."""
-
+    """Vectorized percussive sounds, safe for SongMixer."""
     @property
     def using_unique_notes(self) -> bool:
         return True
 
     def __init__(self):
-        self.tri = TriangleWave()  # kickで再利用するための三角波生成器
+        self.tri = TriangleWave()
 
-    def generate(self, freq, t):
-        n = str(freq).lower()
+    def generate(self, note, t):
+        """
+        note: str ("kick", "snare", "hihat")
+        t: time array
+        """
+        n = str(note).lower()
         waves = []
+
         if n == "kick":
+            # 周波数を時間で少し変化させる
             f = 150 - 100 * t / t[-1]
-            # 既存の TriangleWave を使用
             wave = self.tri.generate(f[None, :], t)[0]
             wave *= np.exp(-8 * t)
             wave += 0.05 * np.random.uniform(-1, 1, len(t)) * np.exp(-20 * t)
+            waves.append(wave)
 
         elif n == "snare":
             wave = np.random.uniform(-1, 1, len(t)) * np.exp(-30 * t)
+            waves.append(wave)
 
         elif n == "hihat":
             wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80 * t)
+            waves.append(wave)
 
         else:
-            wave = np.zeros(len(t))
-        waves.append(wave)
+            waves.append(np.zeros(len(t)))
+
+        # ここで np.array に変換して (N, len(t)) の形にする
         return np.array(waves)
 
 
