@@ -261,7 +261,7 @@ class SongMixer:
                 num_samples = end_sample - start_sample
                 t = np.linspace(0, event.duration, num_samples, endpoint=False)
 
-                if part.wave_generator.allow_unknown_notes:
+                if part.wave_generator.using_unique_notes:
                     # freqの代わりにnotesをそのまま渡す
                     freqs = event.notes
                 else:
