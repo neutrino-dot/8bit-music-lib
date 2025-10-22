@@ -54,7 +54,7 @@ class SineWave(WaveGenerator):
     """
     def generate(self, freqs, t):
         tt = 2 * np.pi * freqs[:, None] * t[None, :]
-        return np.sin(tt)
+        return 2 * np.abs(2 * (tt - np.floor(tt + 0.5))) - 1
 
 class TriangleWave(WaveGenerator):
     """
