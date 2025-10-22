@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import signal
+import warnings
 from abc import ABC, abstractmethod
 class WaveGenerator(ABC):
     """
@@ -131,6 +132,7 @@ class DrumWave(WaveGenerator):
         elif n == "hihat":
             wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80*t)
         else:
+            warnings.warn(f"Unknown note: {n}")
             wave = np.zeros(len(t))
         waves.append(wave)
 
