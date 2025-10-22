@@ -18,7 +18,7 @@ class WaveGenerator(ABC):
         return False
 
     @abstractmethod
-    def generate(self, freq, t):
+    def generate(self, freqs, t):
         pass
 
 class SquareWave(WaveGenerator):
@@ -104,8 +104,8 @@ class DrumWave(WaveGenerator):
     def __init__(self):
         self.tri = TriangleWave()  # kickで再利用するための三角波生成器
 
-    def generate(self, freqs, t):
-        n = str(freqs).lower()
+    def generate(self, freq, t):
+        n = str(freq).lower()
 
         if n == "kick":
             f = 150 - 100 * t / t[-1]
