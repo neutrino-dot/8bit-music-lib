@@ -106,7 +106,7 @@ class DrumWave(WaveGenerator):
 
     def generate(self, freq, t):
         n = str(freq).lower()
-
+        waves = []
         if n == "kick":
             f = 150 - 100 * t / t[-1]
             # 既存の TriangleWave を使用
