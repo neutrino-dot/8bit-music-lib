@@ -97,27 +97,20 @@ class NoiseWave(WaveGenerator):
 class DrumWave(WaveGenerator):
     @property
     def using_unique_notes(self) -> bool:
-        return True
+        return True  # 未知の音符もOK
 
-    def __init__(self):
-        self.tri = TriangleWave()
-
-    def generate(self, note, t):
-        """
-        note: str ("kick", "snare", "hihat")
-        t: time array
-        """
+    def generate(self, freqs, t):
         waves = []
-        n = str(note).lower()
-
+        n = str(freqs).lower()
         if n == "kick":
             # 初期ピッチ高めから最終ピッチへスライド
             freq_start = 150.0
             freq_end = 50.0
             freqs_t = freq_start + (freq_end - freq_start) * t / t[-1]
 
-            # TriangleWave をベクトル計算
-            wave = self.tri.generate(freqs_t[None, :], t)[0]
+            # 三角波生成
+            tt = 2 * np.pi * freqs_t * t
+            wave = 2 / np.pi * np.arcsin(np.sin(tt))
 
             # 短い減衰（Decay）
             wave *= np.exp(-8 * t)
@@ -126,19 +119,14 @@ class DrumWave(WaveGenerator):
             wave += 0.05 * np.random.uniform(-1, 1, len(t)) * np.exp(-20 * t)
 
         elif n == "snare":
-            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-30 * t)
-
+            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-30*t)
         elif n == "hihat":
-            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80 * t)
-
+            wave = np.random.uniform(-1, 1, len(t)) * np.exp(-80*t)
         else:
             wave = np.zeros(len(t))
-
         waves.append(wave)
 
-        # 単一音でも (1, len(t)) の形で返す
         return np.array(waves)
-
 
 __all__ = [
     "SquareWave",
