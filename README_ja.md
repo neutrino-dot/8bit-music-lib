@@ -101,6 +101,8 @@ song = m8.SongMixer([part1])
 song.play()
 ```
 
+詳細な使い方や複雑なサンプル、各クラスの説明などは[Wiki](https://github.com/neutrino-dot/8bit-music-lib/wiki)にまとめています。
+
 ---
 ## あとがき
 
