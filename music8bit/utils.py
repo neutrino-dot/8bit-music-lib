@@ -1,6 +1,6 @@
 import numpy as np
 import warnings
-def play_audio(wave: np.ndarray, sr: int = 22050):
+def _play_audio(wave: np.ndarray, sr: int = 22050):
     """
     環境に応じて自動で再生方式を切り替える
     """
@@ -33,7 +33,7 @@ def play_audio(wave: np.ndarray, sr: int = 22050):
     warnings.warn("No available audio playback method found.")
     return None
 
-def check_Val_Typ(value, expected_type, least_range=None, most_range=None, name="value"):
+def _validate(value, expected_type, least_range=None, most_range=None, name="value"):
     """ある変数が期待通りの型でかつそれが範囲内に入っているかを調べる関数"""
     # 型チェック
     if not isinstance(value, expected_type):

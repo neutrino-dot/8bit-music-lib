@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import signal
+import warnings
 from abc import ABC, abstractmethod
 class WaveGenerator(ABC):
     """
@@ -14,11 +15,11 @@ class WaveGenerator(ABC):
         Generate waveform data for the given frequencies and time array.
     """
     @property
-    def allow_unknown_notes(self) -> bool:
+    def using_unique_notes(self) -> bool:
         return False
 
     @abstractmethod
-    def generate(self, freq, t):
+    def generate(self, freqs, t):
         pass
 
 class SquareWave(WaveGenerator):
@@ -67,7 +68,7 @@ class TriangleWave(WaveGenerator):
     """
     def generate(self, freqs, t):
         tt = 2 * np.pi * freqs[:, None] * t[None, :]
-        return 2 / np.pi * np.arcsin(np.sin(tt))
+        return 2 * np.abs(2 * (tt - np.floor(tt + 0.5))) - 1
 
 class NoiseWave(WaveGenerator):
     """
@@ -75,29 +76,76 @@ class NoiseWave(WaveGenerator):
 
     This class mimics the noise channel found in retro game consoles.
     The noise itself has no inherent meaning—it's just randomness.
-    So if you want to label it with your favorite symbol (★, ♪, ☂, etc.),
-    go ahead! It’s purely up to your imagination.
+    
+    Parameters
+    ----------
+    decay_rate : float, optional
+        Duty cycle of the square wave (0.0-1.0), default is 0.5.
 
     Methods
     -------
     generate(freqs, t)
-        Generate noise waveform. `freqs` is ignored; `t` is used to shape the envelope.
+        Exponential decay coefficient. Larger = faster decay. Default is 5.0.
     """
     @property
-    def allow_unknown_notes(self) -> bool:
+    def using_unique_notes(self) -> bool:
         return True  # 未知の音符もOK
-    
-    def generate(self, freqs, t):
+
+    def __init__(self, decay_rate=5.0):
+        if not isinstance(decay_rate, (int, float)) or decay_rate <= 0:
+            raise ValueError(f"decay_rate must be positive, got {decay_rate}")
+        self.decay_rate = decay_rate
+        
+    def generate(self, freqs, t, decay_rate=None):
+        if decay_rate is None:
+            decay_rate = self.decay_rate
         num_samples = len(t)
-        waves = np.random.uniform(-0.2, 0.2, (len(freqs), num_samples))
-        envelope = np.exp(-5 * t)
+        waves = np.random.uniform(-1, 1, (len(freqs), num_samples))
+        envelope = np.exp(-decay_rate * t)
         waves *= envelope
         return waves
+
+class DrumWave(WaveGenerator):
+    @property
+    def using_unique_notes(self) -> bool:
+        return True  # 未知の音符もOK
+
+    def __init__(self):
+        self.noise = NoiseWave()
+
+    def generate(self, freqs, t):
+        n = str(freqs).lower()
+        if n == "kick":
+            # 初期ピッチ高めから最終ピッチへスライド
+            freq_start = 150.0
+            freq_end = 50.0
+            freqs_t = freq_start + (freq_end - freq_start) * t / t[-1]
+
+            # 三角波生成
+            tt = 2 * np.pi * freqs_t * t
+            wave = 2 / np.pi * np.arcsin(np.sin(tt))
+
+            # 短い減衰（Decay）
+            wave *= np.exp(-8 * t)
+
+            # 短いアタックノイズ
+            wave += 0.05 * self.noise.generate([1], t, decay_rate=20.0)[0]
+
+        elif n == "snare":
+            wave = self.noise.generate([1], t, decay_rate=30.0)[0]
+        elif n == "hihat":
+            wave = self.noise.generate([1], t, decay_rate=80.0)[0]
+        else:
+            warnings.warn(f"Unknown note: {n}")
+            wave = np.zeros(len(t))
+
+        return np.array([wave])
 
 __all__ = [
     "SquareWave",
     "TriangleWave",
     "SineWave",
     "NoiseWave",
+    "DrumWave",
     "WaveGenerator"
 ]
