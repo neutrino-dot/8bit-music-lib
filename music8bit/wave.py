@@ -136,7 +136,8 @@ class DrumWave(WaveGenerator):
         elif n == "hihat":
             wave = self.noise.generate([1], t, decay_rate=80.0)[0]
         else:
-            warnings.warn(f"Unknown note: {n}")
+            if n != "R":
+                warnings.warn(f"Unknown note: {n}")
             wave = np.zeros(len(t))
 
         return np.array([wave])
