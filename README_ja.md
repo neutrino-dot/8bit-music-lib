@@ -51,7 +51,7 @@ Colabではコマンドの先頭に `!` を付けて実行してください。
 pip install 8bit-music-lib[jupyter]
 ```
 
-### 最低限の機能だけまたは使用する場合
+### 最低限の機能だけ使用する場合
 ```bash
 pip install 8bit-music-lib
 ```
