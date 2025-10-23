@@ -6,7 +6,14 @@
 バージョン管理には [Semantic Versioning](https://semver.org/lang/ja/) を使用します。
 
 ---
+## [Unreleased]
 
+### Added
+- `expansion`フォルダを追加
+- nes風の波形関数`nes_waves.py`を追加
+- mml,midiに対応した`helper.py`を追加
+
+---
 ## [v0.2.0] - 2025-10-23
 
 ### Added
