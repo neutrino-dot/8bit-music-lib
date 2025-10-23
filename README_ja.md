@@ -51,7 +51,7 @@ Colabではコマンドの先頭に `!` を付けて実行してください。
 pip install 8bit-music-lib[jupyter]
 ```
 
-### 最低限の機能だけ使用する場合
+### 最低限の機能だけまたは使用する場合
 ```bash
 pip install 8bit-music-lib
 ```
@@ -100,94 +100,6 @@ song = m8.SongMixer([part1])
 # 再生
 song.play()
 ```
-
----
-
-## 音の入力方法
-
-1音を指定する場合：
-```python
-(['音階'], 拍数)
-```
-
-- `音階` : `'C5'` のように音名とオクターブを文字列で指定
-- `拍数` : 音の長さ（1拍、2拍など）
-
-複数の音を同時に鳴らす場合：
-```python
-(['C5','E5','G5'], 1)  # ド・ミ・ソを同時に1拍
-```
-
-休符（休み）を入れる場合：
-```python
-(['R'],1)  # 一拍休む
-```
-
-途中でBPMを変更する場合：
-```python
-('BPM',200)  # BPMを200に変更
-```
-
----
-
-## パートの定義方法
-
-`Part` クラスで1つのメロディパートを作成できます。  
-複数パートを組み合わせて曲全体を作るときに使用します。
-
-```python
-part = m8.Part(
-    melody=notes,              # 音符リスト
-    volume=0.5,                # 音量（0.0〜1.0）
-    generator=m8.SquareWave(), # 波形種類（SquareWave, TriangleWave, NoiseWave, SineWaveなど）
-    first_bpm=120              # 最初のBPM
-)
-```
-
-- `melody` : 音符リスト
-- `volume` : 0.0で無音、1.0で最大（大きすぎると音割れに注意）
-- `generator` : 音の波形
-- `first_bpm` : 曲の最初のテンポ
-
----
-
-## 再生方法
-
-`SongMixer` クラスに `Part` インスタンスをリストで渡すと、曲全体を波形データに変換できます。
-
-```python
-# 複数のPartインスタンスを合成して曲にする
-song = m8.SongMixer([part1, part2, part3])
-
-# 波形データの取得
-waveform = song.synthesize()
-
-# 音の再生
-song.play()
-```
-
-- `synthesize()` : 波形データを返す  
-- `play()` : 音を再生（再生ライブラリが未インストールの場合は不可）
-
----
-
-### 独自波形関数を使用する場合
-ほぼおまけみたいなものです。
-
-独自の波形を追加するには、`WaveGenerator` をサブクラス化し、`generate(freqs, t)` を実装します。  
-使用例:
-```python
-from music8bit import WaveGenerator
-import numpy as np
-
-class MyWave(WaveGenerator):
-    def generate(self, freqs, t):
-        return np.sin(2*np.pi*freqs[:, None]*t[None, :])**3
-```
-- freqs は音階ごとの周波数（1D配列）
-- t は時間軸（1D配列）  
-
-returnの部分にお好きな処理をお書きください
 
 ---
 ## あとがき
