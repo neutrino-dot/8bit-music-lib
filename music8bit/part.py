@@ -1,5 +1,6 @@
 import numbers
 from .notes import NoteEvent
+from .part import Part
 from .wave import WaveGenerator
 from .utils import _validate
 
