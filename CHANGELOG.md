@@ -1,9 +1,9 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+すべての重要な変更はこのファイルに記録されます。
 
-The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+フォーマットは [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に準拠し、
+バージョン管理には [Semantic Versioning](https://semver.org/lang/ja/) を使用します。
 
 ---
 ## [Unreleased]
@@ -15,43 +15,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 ## [v0.2.1] - 2025-10-24
 
-### Changed
-- Split several core components from `core.py` into separate modules for better maintainability:
-  - NOTE_FREQUENCIES dictionary and `NoteEvent` class moved to `notes.py`
-  - `Part` class moved to `part.py`
-  - `SongMixer` class moved to `mixer.py`
-- Updated unused `_validate` function in `utils.py` to be actively used where appropriate.
-  
-### Removed
-- Removed the `SongConfig` class (its functionality is now integrated elsewhere).
+### Changed  
+- `core.py` に含まれていた主要なコンポーネントを、保守性向上のため複数ファイルに分割：  
+  - `NOTE_FREQUENCIES` 辞書と `NoteEvent` クラスを `notes.py` へ移動  
+  - `Part` クラスを `part.py` へ移動  
+  - `SongMixer` クラスを `mixer.py` へ移動  
+- `utils.py` 内の `_validate` 関数を、適切な箇所で使用するよう更新  
+
+### Removed  
+- `SongConfig` クラスを削除（機能は他の部分に統合済み）。
 
 ---
 ## [v0.2.0] - 2025-10-23
 
 ### Added
-- Added `DrumWave` class
-- Added parameter `using_unique_notes` for classes using unique note sets
-- Added argument `decay_rate` in `NoiseWave` class to control noise decay length
+- `DrumWave` クラスを追加
+- 独自音階を用いるクラスにパラメーター `using_unique_notes` を追加
+- `NoiseWave` クラスにノイズの長さを調整する引数 `decay_rate` を追加
 
 ### Changed
-- Made `Part` class arguments keyword-only
-- Updated docstring in `SongMixer` class
-
-### Removed
-- Removed usage examples from `README.md` and `README_ja.md`, moved them to the GitHub wiki
+- `README.md` や `README_ja.md` から使用方法を削除、代わりに GitHub の wiki ページに移動
+- `Part` クラスの引数をキーワード専用引数に固定
+- `SongMixer` クラスの docstring を変更
 
 ### Fixed
-- Fixed inconsistencies in `generator` method arguments between `WaveGenerator` base class and subclasses
-- Renamed some internal functions in `utils.py`
+- 基底クラス `WaveGenerator` と継承先の波形クラスの引数の違いを修正
+- `utils.py` にある内部用関数の名前を修正
 
 ---
 ## [v0.1.1] - 2025-10-07
 
 ### Fixed
-- Corrected typos and unclear descriptions in `README.md` and `README_ja.md`
+- `README.md` と `README_ja.md` の誤りとわかりにくい部分を修正
 
 ---
 ## [v0.1.0] - 2025-09-19
 
 ### Added
-- Initial release of core features (`8bit-music-lib`)
+- 初回リリース（`8bit-music-lib` コア機能）
