@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed inconsistencies in `generator` method arguments between `WaveGenerator` base class and subclasses
-- Renamed some internal helper functions in `utils.py`
+- Renamed some internal functions in `utils.py`
 
 ---
 ## [v0.1.1] - 2025-10-07
