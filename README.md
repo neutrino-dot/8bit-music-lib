@@ -19,7 +19,9 @@ This is a Python library for playing 8-bit style chiptune music.
 8bit-music-lib
 ├── music8bit
 │   ├── __init__.py
-│   ├── core.py
+│   ├── mixer.py
+│   ├── notes.py
+│   ├── part.py
 │   ├── utils.py
 │   └── wave.py
 ├── .gitignore
