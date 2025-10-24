@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `expansion` folder
 - Added NES-style waveform functions in `nes_waves.py`
 - Added `helper.py` with MML and MIDI support
+---
+## [v0.2.1] - 2025-10-24
+
+### Changed
+- Split several core components from `core.py` into separate modules for better maintainability:
+  - NOTE_FREQUENCIES dictionary and `NoteEvent` class moved to `notes.py`
+  - `Part` class moved to `part.py`
+  - `SongMixer` class moved to `mixer.py`
+- Updated unused `_validate` function in `utils.py` to be actively used where appropriate.
+  
+### Removed
+- Removed the `SongConfig` class (its functionality is now integrated elsewhere).
 
 ---
 ## [v0.2.0] - 2025-10-23
