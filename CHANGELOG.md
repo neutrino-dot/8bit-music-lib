@@ -1,45 +1,45 @@
 # Changelog
 
-すべての重要な変更はこのファイルに記録されます。
+All notable changes to this project will be documented in this file.
 
-フォーマットは [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に準拠し、
-バージョン管理には [Semantic Versioning](https://semver.org/lang/ja/) を使用します。
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 ## [Unreleased]
 
 ### Added
-- `expansion`フォルダを追加
-- nes風の波形関数`nes_waves.py`を追加
-- mml,midiに対応した`helper.py`を追加
+- Added `expansion` folder
+- Added NES-style waveform functions in `nes_waves.py`
+- Added `helper.py` with MML and MIDI support
 
 ---
 ## [v0.2.0] - 2025-10-23
 
 ### Added
-- `DrumWave` クラスを追加
-- 独自音階を用いるクラスにパラメーター `using_unique_notes` を追加
-- `NoiseWave` クラスにノイズの長さを調整する引数 `decay_rate` を追加
+- Added `DrumWave` class
+- Added parameter `using_unique_notes` for classes using unique note sets
+- Added argument `decay_rate` in `NoiseWave` class to control noise decay length
 
 ### Changed
-- `README.md` や `README_ja.md` から使用方法を削除、代わりに GitHub の wiki ページに移動
-- `Part` クラスの引数をキーワード専用引数に固定
-- `SongMixer` クラスの docstring を変更
+- Made `Part` class arguments keyword-only
+- Updated docstring in `SongMixer` class
+
+### Removed
+- Removed usage examples from `README.md` and `README_ja.md`, moved them to the GitHub wiki
 
 ### Fixed
-- 基底クラス `WaveGenerator` と継承先の波形クラスの引数の違いを修正
-- `utils.py` にある内部用関数の名前を修正
+- Fixed inconsistencies in `generator` method arguments between `WaveGenerator` base class and subclasses
+- Renamed some internal helper functions in `utils.py`
 
 ---
-
 ## [v0.1.1] - 2025-10-07
 
 ### Fixed
-- `README.md` と `README_ja.md` の誤りとわかりにくい部分を修正
+- Corrected typos and unclear descriptions in `README.md` and `README_ja.md`
 
 ---
-
 ## [v0.1.0] - 2025-09-19
 
 ### Added
-- 初回リリース（`8bit-music-lib` コア機能）
+- Initial release of core features (`8bit-music-lib`)
