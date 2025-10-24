@@ -2,6 +2,9 @@ import numpy as np
 from scipy import signal
 import warnings
 from abc import ABC, abstractmethod
+from utils import _validate
+
+
 class WaveGenerator(ABC):
     """
     Abstract base class for waveform generators.
@@ -37,9 +40,8 @@ class SquareWave(WaveGenerator):
         Generate square wave for the given frequencies and time array.
     """
     def __init__(self, duty=0.5):
-        if not isinstance(duty, (int,float)) or not (0.0 <= duty <= 1.0):
-            raise ValueError(f"duty must be a real number between 0.0 and 1.0, got {duty}")
-        self.duty = duty
+        self.duty = _validate(duty, (int,float), least_range=0.0, most_range=1.0, name="duty")
+    
     def generate(self, freqs, t):
         tt = 2 * np.pi * freqs[:, None] * t[None, :]
         return signal.square(tt, duty=self.duty)
@@ -92,9 +94,7 @@ class NoiseWave(WaveGenerator):
         return True  # 未知の音符もOK
 
     def __init__(self, decay_rate=5.0):
-        if not isinstance(decay_rate, (int, float)) or decay_rate <= 0:
-            raise ValueError(f"decay_rate must be positive, got {decay_rate}")
-        self.decay_rate = decay_rate
+        self.decay_rate = _validate(decay_rate, (int, float), least_range=0.0, name="decay_rate")
         
     def generate(self, freqs, t, decay_rate=None):
         if decay_rate is None:

@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+
+# Frequency of each music scale
 NOTE_FREQUENCIES = {
     "C1": 32.703, "C#1": 34.648, "D1": 36.708, "D#1": 38.891, "E1": 41.203, "F1": 43.654, "F#1": 46.249, "G1": 48.999, "G#1": 51.913, "A1": 55.000, "A#1": 58.270, "B1": 61.735,
     "C2": 65.406, "C#2": 69.296, "D2": 73.416, "D#2": 77.782, "E2": 82.407, "F2": 87.307, "F#2": 92.499, "G2": 97.999, "G#2": 103.826, "A2": 110.000, "A#2": 116.541, "B2": 123.471,
@@ -9,3 +12,12 @@ NOTE_FREQUENCIES = {
     "C8": 4186.009, "C#8": 4434.922, "D8": 4698.636, "D#8": 4978.032, "E8": 5274.041, "F8": 5587.652, "F#8": 5919.911, "G8": 6271.927, "G#8": 6644.875, "A8": 7040.000, "A#8": 7458.620, "B8": 7902.133,
     "R": 0
 }
+
+@dataclass(slots=True)
+class NoteEvent:
+    """
+    Represents a single note event with start time, duration, and notes.
+    """
+    start_time: float
+    duration: float
+    notes: list[str]
