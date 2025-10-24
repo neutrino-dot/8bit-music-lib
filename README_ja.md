@@ -22,6 +22,7 @@ Pythonで8bit風のチップチューン音楽を再生するためのライブ�
 │   ├── utils.py
 │   └── wave.py
 ├── .gitignore
+├── CHANGELOG.md
 ├── LICENSE
 ├── README.md
 ├── README_ja.md
