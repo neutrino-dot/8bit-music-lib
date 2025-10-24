@@ -1,17 +1,17 @@
 # Changelog
+個人用です
 
-すべての重要な変更はこのファイルに記録されます。
-
-フォーマットは [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に準拠し、
-バージョン管理には [Semantic Versioning](https://semver.org/lang/ja/) を使用します。
+↓**For public use, click here**\
+[Public Release Notes](https://github.com/neutrino-dot/8bit-music-lib/releases)
 
 ---
 ## [Unreleased]
 
 ### Added
-- Added `expansion` folder
-- Added NES-style waveform functions in `nes_waves.py`
-- Added `helper.py` with MML and MIDI support
+- `expansion` フォルダの追加
+- NES風の波形関数を`nes_waves.py`へ追加
+- `helper.py`にmmlとmidiのparserを追加
+
 ---
 ## [v0.2.1] - 2025-10-24
 
