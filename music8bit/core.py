@@ -172,7 +172,7 @@ class SongMixer:
     Notes
     -----
     - All parts must use a WaveGenerator subclass as their generator.
-    - Notes not found in SongConfig.NOTE_FREQUENCIES are ignored.
+    - Notes not found in NOTE_FREQUENCIES are ignored.
     - Empty melodies produce a silent waveform.
 
     Examples
@@ -212,7 +212,7 @@ class SongMixer:
 
 
     def _validate_note(self, note) -> bool:
-        if note.upper() not in SongConfig.NOTE_FREQUENCIES:
+        if note.upper() not in NOTE_FREQUENCIES:
             warnings.warn(f"Unknown note: {note}")
             return False
         return True
@@ -252,10 +252,10 @@ class SongMixer:
                     freqs = event.notes
                 else:
                     freqs = np.array([
-                        SongConfig.NOTE_FREQUENCIES[note.upper()]
+                        NOTE_FREQUENCIES[note.upper()]
                         for note in event.notes
                         if self._validate_note(note)
-                        and SongConfig.NOTE_FREQUENCIES[note.upper()] > 0
+                        and NOTE_FREQUENCIES[note.upper()] > 0
                     ])
 
                 if len(freqs) == 0:
