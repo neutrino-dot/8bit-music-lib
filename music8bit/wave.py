@@ -2,7 +2,7 @@ import numpy as np
 from scipy import signal
 import warnings
 from abc import ABC, abstractmethod
-from utils import _validate
+from .utils import _validate
 
 
 class WaveGenerator(ABC):
