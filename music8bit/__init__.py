@@ -1,5 +1,5 @@
-from part import Part
-from mixer import SongMixer   
+from .part import Part
+from .mixer import SongMixer   
 from .wave import *
 
 __all__ = [
