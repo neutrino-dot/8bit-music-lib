@@ -5,25 +5,15 @@ from .part import Part
 from .utils import _validate,_play_audio
 
 
-class SongConfig:
-        @staticmethod
-    def map_volume(user_vol: float) -> float:
-        """
-        Map user volume from 0.0-1.0 to 0.01-0.08 range.
-        """
-        min_v, max_v = 0.01, 0.08
-        return min_v + (max_v - min_v) * user_vol
-
-    @staticmethod
-    def quantize_8bit(wave_buffer: np.ndarray) -> np.ndarray:
-        """
-        Normalize and quantize waveform to 8-bit style.
-        """
-        max_amp = np.max(np.abs(wave_buffer))
-        if max_amp > 0:
-            wave_buffer /= max_amp
-        wave_buffer_8bit = np.round(wave_buffer * 127).astype(np.int8)
-        return (wave_buffer_8bit.astype(np.float32) / 127 * 32767).astype(np.int16)
+def quantize_8bit(wave_buffer: np.ndarray) -> np.ndarray:
+    """
+    Normalize and quantize waveform to 8-bit style.
+    """
+    max_amp = np.max(np.abs(wave_buffer))
+    if max_amp > 0:
+        wave_buffer /= max_amp
+    wave_buffer_8bit = np.round(wave_buffer * 127).astype(np.int8)
+    return (wave_buffer_8bit.astype(np.float32) / 127 * 32767).astype(np.int16)
 
 
 class SongMixer:
@@ -83,10 +73,10 @@ class SongMixer:
                     continue
 
                 waves = part.wave_generator.generate(freqs, t)
-                wave_sum = waves.sum(axis=0) * SongConfig.map_volume(part.volume)
+                wave_sum = waves.sum(axis=0) * (0.01 + 0.07 * part.volume) # 合計&音量調整
                 wave_buffer[start_sample:end_sample] += wave_sum
 
-        self._wave = SongConfig.quantize_8bit(wave_buffer)
+        self._wave = quantize_8bit(wave_buffer)
         return self._wave
 
     def play(self):
