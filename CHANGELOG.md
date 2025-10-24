@@ -1,7 +1,7 @@
 # Changelog
-個人用です
 
-↓**For public use, click here**\
+**このファイルは開発者向けの変更履歴です。公開用のリリースノートは以下をご覧ください。**\
+**↓For public use, click here**\
 [Public Release Notes](https://github.com/neutrino-dot/8bit-music-lib/releases)
 
 ---
