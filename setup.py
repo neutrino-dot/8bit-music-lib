@@ -17,6 +17,7 @@ setup(
         "Bug Tracker": "https://github.com/neutrino-dot/8bit-music-lib/issues",
         "Documentation": "https://github.com/neutrino-dot/8bit-music-lib#readme",
         "Source Code": "https://github.com/neutrino-dot/8bit-music-lib",
+        "Release Notes": "https://github.com/neutrino-dot/8bit-music-lib/releases"
     },
     packages=find_packages(),
     install_requires=[
