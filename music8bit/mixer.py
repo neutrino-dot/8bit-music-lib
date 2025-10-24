@@ -1,6 +1,7 @@
 import warnings
 import numpy as np
 from .notes import NOTE_FREQUENCIES
+from .part import Part
 from .utils import _validate,_play_audio
 
 
