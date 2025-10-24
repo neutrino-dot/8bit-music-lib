@@ -1,4 +1,4 @@
-# Changelog
+# Changelog_JA
 
 **このファイルは開発者向けの変更履歴です。公開用のリリースノートは以下をご覧ください。**\
 **↓For public use, click here**\
