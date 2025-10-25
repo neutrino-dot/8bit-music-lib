@@ -10,6 +10,7 @@
 ### Added
 - `first_bpm`を`bpm`に変更(mixier.py)
 - `melody`引数をキーワード専用引数から除外(mixier.py)
+- `CHANGELOG.md`を`CHANGELOG_JA.md`に名前変更(CHANGELoG.md,README.md,README_JA.md)
 
 ---
 ## [v0.2.1] - 2025-10-24
