@@ -18,7 +18,7 @@ class Part:
         Volume of the part (0.0 to 1.0).
     generator : WaveGenerator
         An instance of a waveform generator (e.g., SquareWave(), TriangleWave(), NoiseWave()).
-    first_bpm : float
+    bpm : float
         The initial tempo in beats per minute.
 
     Attributes
@@ -46,9 +46,9 @@ class Part:
 
     melody = [(['C4'], 1), (['E4','E5'], 1), (['G4'], 2), (['R'], 1), (['BPM'], 90)]
 
-    part = Part(melody, volume=0.5, generator=SquareWave(), first_bpm=120)
+    part = Part(melody, volume=0.5, generator=SquareWave(), bpm=120)
     """
-    def __init__(self, *, melody, volume=0.5, generator:"WaveGenerator", first_bpm=120):
+    def __init__(self, *, melody, volume=0.5, generator:"WaveGenerator", bpm=120):
         # 自動判定
         if not isinstance(melody, list):
             raise TypeError("melody must be a list")
@@ -59,7 +59,7 @@ class Part:
               if len(item) != 2:
                   raise TypeError(f"melody[{i}] must have length 2, got {len(item)}")
 
-        self.bpm = _validate(first_bpm,numbers.Real,least_range=0.01,name="first_bpm")
+        self.bpm = _validate(bpm,numbers.Real,least_range=0.01,name="bpm")
         self.volume = _validate(volume,numbers.Real,least_range=0.0,name="volume")
         self.wave_generator = _validate(generator, WaveGenerator, name="generator")
         self.events = self.schedule(melody)
