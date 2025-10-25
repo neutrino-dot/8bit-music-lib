@@ -8,9 +8,8 @@
 ## [Unreleased]
 
 ### Added
-- `expansion` フォルダの追加
-- NES風の波形関数を`nes_waves.py`へ追加
-- `helper.py`にmmlとmidiのparserを追加
+- `first_bpm`を`bpm`に変更(mixier.py)
+- `melody`引数をキーワード専用引数から除外(mixier.py)
 
 ---
 ## [v0.2.1] - 2025-10-24
