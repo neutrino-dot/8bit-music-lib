@@ -8,9 +8,14 @@
 ## [Unreleased]
 
 ### Added
-- `first_bpm`を`bpm`に変更(mixier.py)
-- `melody`引数をキーワード専用引数から除外(mixier.py)
-- `CHANGELOG.md`を`CHANGELOG_JA.md`に名前変更(CHANGELoG.md,README.md,README_JA.md)
+- `Part`クラスの引数に`name`(型:`str`)を追加
+
+### Changed
+- `Part`クラスに関する変更
+  - `first_bpm`を`bpm`に変更
+  - `melody`引数をキーワード専用引数から位置引数に変更
+  - `melody`引数に不正な値が入力された場合の`typeError`に、配列名を含む詳細なエラーメッセージを追加
+- `CHANGELOG.md`を`CHANGELOG_JA.md`に名前変更(それに伴い、README.md,README_JA.mdのファイル構造表示も変更)
 
 ---
 ## [v0.2.2] - 2025-10-31
