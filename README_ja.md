@@ -2,6 +2,9 @@
 
 Pythonで8bit風のチップチューン音楽を再生するためのライブラリです。
 
+
+詳細な使い方や複雑なサンプル、各クラスの説明などは[wiki](https://github.com/neutrino-dot/8bit-music-lib/wiki/Home_JP)にまとめています。
+
 - Google Colaboratoryでも動かせるようにJupyter Notebookに対応
 - 「試しに8bit音楽を再生させてみたい！」という方向け
 - 将来的にはMMLやMIDIファイルの入出力にも対応予定
@@ -103,8 +106,6 @@ song = m8.SongMixer([part1])
 # 再生
 song.play()
 ```
-
-詳細な使い方や複雑なサンプル、各クラスの説明などは[wiki](https://github.com/neutrino-dot/8bit-music-lib/wiki/Home_JP)にまとめています。
 
 ---
 ## あとがき
