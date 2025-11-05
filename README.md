@@ -25,7 +25,7 @@ This is a Python library for playing 8-bit style chiptune music.
 │   ├── utils.py
 │   └── wave.py
 ├── .gitignore
-├── CHANGELOG_JA.md
+├── CHANGELOG_ja.md
 ├── LICENSE
 ├── README.md
 ├── README_ja.md
