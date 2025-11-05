@@ -48,18 +48,17 @@ class Part:
 
     part = Part(melody, volume=0.5, generator=SquareWave(), first_bpm=120)
     """
-    def __init__(self, melody, *, volume=0.5, generator:"WaveGenerator", bpm=120):
-        # 自動判定
+    def __init__(self, melody, *, name="melody_array", volume=0.5, generator:"WaveGenerator", bpm=120):
+        # melody の型チェック
         if not isinstance(melody, list):
-            raise TypeError("melody must be a list")
-        elif not all(isinstance(item, tuple) and len(item) == 2 for item in melody):
-            for i, item in enumerate(melody):
-              if not isinstance(item, tuple):
-                  raise TypeError(f"melody[{i}] must be tuple, got {type(item).__name__}")
-              if len(item) != 2:
-                  raise TypeError(f"melody[{i}] must have length 2, got {len(item)}")
-
-        self.bpm = _validate(first_bpm,numbers.Real,least_range=0.01,name="first_bpm")
+            raise TypeError(f"{name} must be a list")
+        for i, item in enumerate(melody):
+            if not isinstance(item, tuple):
+                raise TypeError(f"{name}[{i}] must be a tuple, got {type(item).__name__}")
+            if len(item) != 2:
+                raise TypeError(f"{name}[{i}] must have length 2, got {len(item)}")
+                  
+        self.bpm = _validate(bpm,numbers.Real,least_range=0.01,name="bpm")
         self.volume = _validate(volume,numbers.Real,least_range=0.0,name="volume")
         self.wave_generator = _validate(generator, WaveGenerator, name="generator")
         self.events = self.schedule(melody)
