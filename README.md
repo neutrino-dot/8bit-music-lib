@@ -1,4 +1,4 @@
-# 8bit-music-lib (English)
+# 8bit-music-lib
 This is a Python library for playing 8-bit style chiptune music.
 
 [日本語READMEはこちら](https://github.com/neutrino-dot/8bit-music-lib/blob/main/README_ja.md)
