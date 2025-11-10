@@ -5,7 +5,7 @@ from .part import Part
 from .utils import _validate,_play_audio
 
 
-def quantize_8bit(wave_buffer: np.ndarray) -> np.ndarray:
+def _quantize_8bit(wave_buffer: np.ndarray) -> np.ndarray:
     """
     Normalize and quantize waveform to 8-bit style.
     """
@@ -145,7 +145,7 @@ class SongMixer:
                 wave_sum = waves.sum(axis=0) * (0.01 + 0.07 * part.volume) # 合計&音量調整
                 wave_buffer[start_sample:end_sample] += wave_sum
 
-        self._wave = quantize_8bit(wave_buffer)
+        self._wave = _quantize_8bit(wave_buffer)
         return self._wave
 
     def play(self):
