@@ -127,8 +127,12 @@ class SongMixer:
 
                 if len(freqs) == 0:
                     continue
+                
+                if part.wave_generator.using_others:
+                    waves = part.wave_generator.generate(freqs, t, others)
+                else:
+                    waves = part.wave_generator.generate(freqs, t)
 
-                waves = part.wave_generator.generate(freqs, t)
                 wave_sum = waves.sum(axis=0) * (0.01 + 0.07 * part.volume) # 合計&音量調整
                 wave_buffer[start_sample:end_sample] += wave_sum
 
