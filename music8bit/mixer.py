@@ -54,6 +54,19 @@ class SongMixer:
     - All parts must use a WaveGenerator subclass as their generator.
     - Notes not found in NOTE_FREQUENCIES are ignored.
     - Empty melodies produce a silent waveform.
+
+    Examples
+    --------
+    from your_library import Part, SongMixer, SquareWave
+
+    # Define two parts
+    part1 = Part([(['C4'],1),(['E4'],1)], volume=0.5, generator=SquareWave(), first_bpm=120)
+    part2 = Part([(['G4'],2)], volume=0.4, generator=SquareWave(), first_bpm=120)
+
+    # Mix and play
+    mixer = SongMixer([part1, part2])
+    mixer.synthesize()
+    mixer.play()
     """
     def __init__(self, parts, sampling_rate=22050):
         if not isinstance(parts, list):
