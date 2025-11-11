@@ -38,15 +38,6 @@ class Part:
     -----
     - Rest notes ("R") are treated as silence.
     - BPM change events ("BPM",value) affect subsequent durations.
-
-    Examples
-    --------
-    from your_library import Part, SquareWave
-
-
-    melody = [(['C4'], 1), (['E4','E5'], 1), (['G4'], 2), (['R'], 1), (['BPM'], 90)]
-
-    part = Part(melody, volume=0.5, generator=SquareWave(), first_bpm=120)
     """
     def __init__(self, melody, *, name="melody_array", volume=0.5, generator:"WaveGenerator", bpm=120):
         # melody の型チェック
