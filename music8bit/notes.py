@@ -21,3 +21,4 @@ class NoteEvent:
     start_time: float
     duration: float
     notes: list[str]
+    others: list[str]
