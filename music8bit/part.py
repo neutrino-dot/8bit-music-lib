@@ -46,7 +46,7 @@ class Part:
         for i, item in enumerate(melody):
             if not isinstance(item, tuple):
                 raise TypeError(f"{name}[{i}] must be a tuple, got {type(item).__name__}")
-            if len(item) != 2:
+            if len(item) < 2:
                 raise TypeError(f"{name}[{i}] must have length 2, got {len(item)}")
                   
         self.bpm = _validate(bpm,numbers.Real,least_range=0.01,name="bpm")
@@ -59,12 +59,12 @@ class Part:
         events = []
         current_time = 0.0
         current_bpm = self.bpm
-        for notes, beat in melody:
+        for notes, beat, *others in melody:
             if notes == "BPM":
                 current_bpm = _validate(float(beat), numbers.Real, least_range=1, name="BPM")
                 continue
             duration = beat * (60 / current_bpm)
-            events.append(NoteEvent(current_time, duration, notes))
+            events.append(NoteEvent(current_time, duration, notes, others))
             current_time += duration
         return events
 
