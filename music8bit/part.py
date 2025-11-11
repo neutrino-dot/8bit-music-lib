@@ -69,4 +69,4 @@ class Part:
         return events
 
     def get_total_beat(self, melody):
-        return sum(beat for notes,beat in melody if notes != "BPM")
+        return sum(beat for notes,beat,*_ in melody if notes != "BPM")
