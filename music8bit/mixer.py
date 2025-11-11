@@ -129,7 +129,7 @@ class SongMixer:
                     continue
                 
                 if part.wave_generator.using_others:
-                    waves = part.wave_generator.generate(freqs, t, others)
+                    waves = part.wave_generator.generate(freqs, t, event.others)
                 else:
                     waves = part.wave_generator.generate(freqs, t)
 
