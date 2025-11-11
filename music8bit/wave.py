@@ -21,6 +21,10 @@ class WaveGenerator(ABC):
     def using_unique_notes(self) -> bool:
         return False
 
+    @property
+    def using_others(self) -> bool:
+        return False
+
     @abstractmethod
     def generate(self, freqs, t):
         pass
