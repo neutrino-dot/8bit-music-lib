@@ -17,6 +17,8 @@
   - `melody`引数に不正な値が入力された場合の`typeError`に、配列名を含む詳細なエラーメッセージを追加
 - `CHANGELOG.md`を`CHANGELOG_ja.md`に名前変更(それに伴い、README.md,README_ja.mdのファイル構造表示も変更)
 
+### Removed
+- `SongMixer`クラスのdocstringからexampleを削除
 ---
 ## [v0.2.2] - 2025-10-31
 ### Fixed
