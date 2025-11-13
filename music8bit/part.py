@@ -46,7 +46,7 @@ class Part:
         for i, item in enumerate(melody):
             if not isinstance(item, tuple):
                 raise TypeError(f"{name}[{i}] must be a tuple, got {type(item).__name__}")
-            if len(item) < 2:
+            if len(item) < 2: # melodyの3以上の要素も可能化
                 raise TypeError(f"{name}[{i}] must have length 2, got {len(item)}")
                   
         self.bpm = _validate(bpm,numbers.Real,least_range=0.01,name="bpm")
