@@ -21,4 +21,4 @@ class NoteEvent:
     start_time: float
     duration: float
     notes: list[str]
-    others: list
+    others: list # その他の要素を格納するothers
