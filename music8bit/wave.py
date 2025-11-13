@@ -21,6 +21,7 @@ class WaveGenerator(ABC):
     def using_unique_notes(self) -> bool:
         return False
 
+    """新しいパラーメータusing_others"""
     @property
     def using_others(self) -> bool:
         return False
