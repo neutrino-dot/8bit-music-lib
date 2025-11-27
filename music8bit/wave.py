@@ -49,7 +49,8 @@ class SquareWave(WaveGenerator):
     
     def generate(self, freqs, t):
         tt = 2 * np.pi * freqs[:, None] * t[None, :]
-        return signal.square(tt, duty=self.duty)
+        waves = signal.square(tt, duty=self.duty)
+        return waves.sum(axis=0)
 
 class SineWave(WaveGenerator):
     """
@@ -62,7 +63,8 @@ class SineWave(WaveGenerator):
     """
     def generate(self, freqs, t):
         tt = 2 * np.pi * freqs[:, None] * t[None, :]
-        return np.sin(tt)
+        waves = np.sin(tt)
+        return waves.sum(axis=0)
 
 class TriangleWave(WaveGenerator):
     """
@@ -75,7 +77,8 @@ class TriangleWave(WaveGenerator):
     """
     def generate(self, freqs, t):
         tt = 2 * np.pi * freqs[:, None] * t[None, :]
-        return 2 * np.abs(2 * (tt - np.floor(tt + 0.5))) - 1
+        waves = 2 * np.abs(2 * (tt - np.floor(tt + 0.5))) - 1
+        return waves.sum(axis=0)
 
 class NoiseWave(WaveGenerator):
     """
@@ -108,7 +111,7 @@ class NoiseWave(WaveGenerator):
         waves = np.random.uniform(-1, 1, (len(freqs), num_samples))
         envelope = np.exp(-decay_rate * t)
         waves *= envelope
-        return waves
+        return waves.sum(axis=0)
 
 class DrumWave(WaveGenerator):
     @property
@@ -145,7 +148,7 @@ class DrumWave(WaveGenerator):
                 warnings.warn(f"Unknown note: {n}")
             wave = np.zeros(len(t))
 
-        return np.array([wave])
+        return wave
 
 __all__ = [
     "SquareWave",
