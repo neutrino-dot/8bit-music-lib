@@ -129,11 +129,11 @@ class SongMixer:
                     continue
                 
                 if part.wave_generator.using_others: # othersを使うタイプの波形にはothersを引数に渡す
-                    waves = part.wave_generator.generate(freqs, t, event.others)
+                    wave_sum = part.wave_generator.generate(freqs, t, event.others)
                 else:
-                    waves = part.wave_generator.generate(freqs, t)
+                    wave_sum = part.wave_generator.generate(freqs, t)
 
-                wave_sum = waves.sum(axis=0) * (0.01 + 0.07 * part.volume) # 合計&音量調整
+                wave_sum *= 0.01 + 0.07 * part.volume # 合計&音量調整
                 wave_buffer[start_sample:end_sample] += wave_sum
 
         self._wave = _quantize_8bit(wave_buffer)
