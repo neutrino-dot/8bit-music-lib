@@ -9,6 +9,8 @@
 
 ### Added
 - `Part`クラスの引数に`name`(型:`str`)を追加
+- 独自追加引数を用いるクラスにパラメーター `using_others` を追加
+- `NoteEvent`クラスに`others`引数を追加
 
 ### Changed
 - `Part`クラスに関する変更
@@ -16,6 +18,7 @@
   - `melody`引数をキーワード専用引数から位置引数に変更
   - `melody`引数に不正な値が入力された場合の`typeError`に、配列名を含む詳細なエラーメッセージを追加
 - `CHANGELOG.md`を`CHANGELOG_ja.md`に名前変更(それに伴い、README.md,README_ja.mdのファイル構造表示も変更)
+- `using_others`が`True`の場合は`generate`に`event.others`を渡す
 
 ### Removed
 - `SongMixer`クラスのdocstringからexampleを削除
