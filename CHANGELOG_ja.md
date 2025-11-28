@@ -19,6 +19,7 @@
   - `melody`引数に不正な値が入力された場合の`typeError`に、配列名を含む詳細なエラーメッセージを追加
 - `CHANGELOG.md`を`CHANGELOG_ja.md`に名前変更(それに伴い、README.md,README_ja.mdのファイル構造表示も変更)
 - `using_others`が`True`の場合は`generate`に`event.others`を渡す
+- `sum(axis=0)`の処理を`wave.py`の波形クラスの方に移動
 
 ### Removed
 - `SongMixer`クラスのdocstringからexampleを削除
